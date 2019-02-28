@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zxl.dao.BillsMapper" >
+  <resultMap id="BaseResultMap" type="com.zxl.entity.Bills" >
+    <id column="billId" property="billid" jdbcType="INTEGER" />
+    <result column="payStatus" property="paystatus" jdbcType="CHAR" />
+    <result column="petId" property="petid" jdbcType="INTEGER" />
+    <result column="ChinesePrices" property="chineseprices" jdbcType="DOUBLE" />
+    <result column="westermPrices" property="westermprices" jdbcType="DOUBLE" />
+    <result column="materialPrices" property="materialprices" jdbcType="DOUBLE" />
+    <result column="exaninePrices" property="exanineprices" jdbcType="DOUBLE" />
+    <result column="registrationPrices" property="registrationprices" jdbcType="DOUBLE" />
+    <result column="OPSPrices" property="opsprices" jdbcType="DOUBLE" />
+    <result column="totalPrices" property="totalprices" jdbcType="DOUBLE" />
+    <result column="billCreateTime" property="billcreatetime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    billId, payStatus, petId, ChinesePrices, westermPrices, materialPrices, exaninePrices, 
+    registrationPrices, OPSPrices, totalPrices, billCreateTime
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zxl.entity.BillsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from bills
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from bills
+    where billId = #{billid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from bills
+    where billId = #{billid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zxl.entity.BillsExample" >
+    delete from bills
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zxl.entity.Bills" >
+    insert into bills (billId, payStatus, petId, 
+      ChinesePrices, westermPrices, materialPrices, 
+      exaninePrices, registrationPrices, OPSPrices, 
+      totalPrices, billCreateTime)
+    values (#{billid,jdbcType=INTEGER}, #{paystatus,jdbcType=CHAR}, #{petid,jdbcType=INTEGER}, 
+      #{chineseprices,jdbcType=DOUBLE}, #{westermprices,jdbcType=DOUBLE}, #{materialprices,jdbcType=DOUBLE}, 
+      #{exanineprices,jdbcType=DOUBLE}, #{registrationprices,jdbcType=DOUBLE}, #{opsprices,jdbcType=DOUBLE}, 
+      #{totalprices,jdbcType=DOUBLE}, #{billcreatetime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zxl.entity.Bills" >
+    insert into bills
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="billid != null" >
+        billId,
+      </if>
+      <if test="paystatus != null" >
+        payStatus,
+      </if>
+      <if test="petid != null" >
+        petId,
+      </if>
+      <if test="chineseprices != null" >
+        ChinesePrices,
+      </if>
+      <if test="westermprices != null" >
+        westermPrices,
+      </if>
+      <if test="materialprices != null" >
+        materialPrices,
+      </if>
+      <if test="exanineprices != null" >
+        exaninePrices,
+      </if>
+      <if test="registrationprices != null" >
+        registrationPrices,
+      </if>
+      <if test="opsprices != null" >
+        OPSPrices,
+      </if>
+      <if test="totalprices != null" >
+        totalPrices,
+      </if>
+      <if test="billcreatetime != null" >
+        billCreateTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="billid != null" >
+        #{billid,jdbcType=INTEGER},
+      </if>
+      <if test="paystatus != null" >
+        #{paystatus,jdbcType=CHAR},
+      </if>
+      <if test="petid != null" >
+        #{petid,jdbcType=INTEGER},
+      </if>
+      <if test="chineseprices != null" >
+        #{chineseprices,jdbcType=DOUBLE},
+      </if>
+      <if test="westermprices != null" >
+        #{westermprices,jdbcType=DOUBLE},
+      </if>
+      <if test="materialprices != null" >
+        #{materialprices,jdbcType=DOUBLE},
+      </if>
+      <if test="exanineprices != null" >
+        #{exanineprices,jdbcType=DOUBLE},
+      </if>
+      <if test="registrationprices != null" >
+        #{registrationprices,jdbcType=DOUBLE},
+      </if>
+      <if test="opsprices != null" >
+        #{opsprices,jdbcType=DOUBLE},
+      </if>
+      <if test="totalprices != null" >
+        #{totalprices,jdbcType=DOUBLE},
+      </if>
+      <if test="billcreatetime != null" >
+        #{billcreatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zxl.entity.BillsExample" resultType="java.lang.Integer" >
+    select count(*) from bills
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update bills
+    <set >
+      <if test="record.billid != null" >
+        billId = #{record.billid,jdbcType=INTEGER},
+      </if>
+      <if test="record.paystatus != null" >
+        payStatus = #{record.paystatus,jdbcType=CHAR},
+      </if>
+      <if test="record.petid != null" >
+        petId = #{record.petid,jdbcType=INTEGER},
+      </if>
+      <if test="record.chineseprices != null" >
+        ChinesePrices = #{record.chineseprices,jdbcType=DOUBLE},
+      </if>
+      <if test="record.westermprices != null" >
+        westermPrices = #{record.westermprices,jdbcType=DOUBLE},
+      </if>
+      <if test="record.materialprices != null" >
+        materialPrices = #{record.materialprices,jdbcType=DOUBLE},
+      </if>
+      <if test="record.exanineprices != null" >
+        exaninePrices = #{record.exanineprices,jdbcType=DOUBLE},
+      </if>
+      <if test="record.registrationprices != null" >
+        registrationPrices = #{record.registrationprices,jdbcType=DOUBLE},
+      </if>
+      <if test="record.opsprices != null" >
+        OPSPrices = #{record.opsprices,jdbcType=DOUBLE},
+      </if>
+      <if test="record.totalprices != null" >
+        totalPrices = #{record.totalprices,jdbcType=DOUBLE},
+      </if>
+      <if test="record.billcreatetime != null" >
+        billCreateTime = #{record.billcreatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update bills
+    set billId = #{record.billid,jdbcType=INTEGER},
+      payStatus = #{record.paystatus,jdbcType=CHAR},
+      petId = #{record.petid,jdbcType=INTEGER},
+      ChinesePrices = #{record.chineseprices,jdbcType=DOUBLE},
+      westermPrices = #{record.westermprices,jdbcType=DOUBLE},
+      materialPrices = #{record.materialprices,jdbcType=DOUBLE},
+      exaninePrices = #{record.exanineprices,jdbcType=DOUBLE},
+      registrationPrices = #{record.registrationprices,jdbcType=DOUBLE},
+      OPSPrices = #{record.opsprices,jdbcType=DOUBLE},
+      totalPrices = #{record.totalprices,jdbcType=DOUBLE},
+      billCreateTime = #{record.billcreatetime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zxl.entity.Bills" >
+    update bills
+    <set >
+      <if test="paystatus != null" >
+        payStatus = #{paystatus,jdbcType=CHAR},
+      </if>
+      <if test="petid != null" >
+        petId = #{petid,jdbcType=INTEGER},
+      </if>
+      <if test="chineseprices != null" >
+        ChinesePrices = #{chineseprices,jdbcType=DOUBLE},
+      </if>
+      <if test="westermprices != null" >
+        westermPrices = #{westermprices,jdbcType=DOUBLE},
+      </if>
+      <if test="materialprices != null" >
+        materialPrices = #{materialprices,jdbcType=DOUBLE},
+      </if>
+      <if test="exanineprices != null" >
+        exaninePrices = #{exanineprices,jdbcType=DOUBLE},
+      </if>
+      <if test="registrationprices != null" >
+        registrationPrices = #{registrationprices,jdbcType=DOUBLE},
+      </if>
+      <if test="opsprices != null" >
+        OPSPrices = #{opsprices,jdbcType=DOUBLE},
+      </if>
+      <if test="totalprices != null" >
+        totalPrices = #{totalprices,jdbcType=DOUBLE},
+      </if>
+      <if test="billcreatetime != null" >
+        billCreateTime = #{billcreatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where billId = #{billid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zxl.entity.Bills" >
+    update bills
+    set payStatus = #{paystatus,jdbcType=CHAR},
+      petId = #{petid,jdbcType=INTEGER},
+      ChinesePrices = #{chineseprices,jdbcType=DOUBLE},
+      westermPrices = #{westermprices,jdbcType=DOUBLE},
+      materialPrices = #{materialprices,jdbcType=DOUBLE},
+      exaninePrices = #{exanineprices,jdbcType=DOUBLE},
+      registrationPrices = #{registrationprices,jdbcType=DOUBLE},
+      OPSPrices = #{opsprices,jdbcType=DOUBLE},
+      totalPrices = #{totalprices,jdbcType=DOUBLE},
+      billCreateTime = #{billcreatetime,jdbcType=TIMESTAMP}
+    where billId = #{billid,jdbcType=INTEGER}
+  </update>
+  <select resultMap="BaseResultMap" parameterType="com.zxl.entity.BillsExample" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from bills
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

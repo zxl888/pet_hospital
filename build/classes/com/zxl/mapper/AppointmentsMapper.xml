@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zxl.dao.AppointmentsMapper" >
+  <resultMap id="BaseResultMap" type="com.zxl.entity.Appointments" >
+    <id column="appId" property="appid" jdbcType="INTEGER" />
+    <result column="appMaster" property="appmaster" jdbcType="CHAR" />
+    <result column="appIdCard" property="appidcard" jdbcType="CHAR" />
+    <result column="appPhone" property="appphone" jdbcType="CHAR" />
+    <result column="docId" property="docid" jdbcType="INTEGER" />
+    <result column="deptId" property="deptid" jdbcType="INTEGER" />
+    <result column="appoDate" property="appodate" jdbcType="DATE" />
+    <result column="appoTime" property="appotime" jdbcType="VARCHAR" />
+    <result column="appCreateTime" property="appcreatetime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    appId, appMaster, appIdCard, appPhone, docId, deptId, appoDate, appoTime, appCreateTime
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zxl.entity.AppointmentsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from appointments
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from appointments
+    where appId = #{appid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from appointments
+    where appId = #{appid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zxl.entity.AppointmentsExample" >
+    delete from appointments
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zxl.entity.Appointments" >
+    insert into appointments (appId, appMaster, appIdCard, 
+      appPhone, docId, deptId, 
+      appoDate, appoTime, appCreateTime
+      )
+    values (#{appid,jdbcType=INTEGER}, #{appmaster,jdbcType=CHAR}, #{appidcard,jdbcType=CHAR}, 
+      #{appphone,jdbcType=CHAR}, #{docid,jdbcType=INTEGER}, #{deptid,jdbcType=INTEGER}, 
+      #{appodate,jdbcType=DATE}, #{appotime,jdbcType=VARCHAR}, #{appcreatetime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zxl.entity.Appointments" >
+    insert into appointments
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="appid != null" >
+        appId,
+      </if>
+      <if test="appmaster != null" >
+        appMaster,
+      </if>
+      <if test="appidcard != null" >
+        appIdCard,
+      </if>
+      <if test="appphone != null" >
+        appPhone,
+      </if>
+      <if test="docid != null" >
+        docId,
+      </if>
+      <if test="deptid != null" >
+        deptId,
+      </if>
+      <if test="appodate != null" >
+        appoDate,
+      </if>
+      <if test="appotime != null" >
+        appoTime,
+      </if>
+      <if test="appcreatetime != null" >
+        appCreateTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="appid != null" >
+        #{appid,jdbcType=INTEGER},
+      </if>
+      <if test="appmaster != null" >
+        #{appmaster,jdbcType=CHAR},
+      </if>
+      <if test="appidcard != null" >
+        #{appidcard,jdbcType=CHAR},
+      </if>
+      <if test="appphone != null" >
+        #{appphone,jdbcType=CHAR},
+      </if>
+      <if test="docid != null" >
+        #{docid,jdbcType=INTEGER},
+      </if>
+      <if test="deptid != null" >
+        #{deptid,jdbcType=INTEGER},
+      </if>
+      <if test="appodate != null" >
+        #{appodate,jdbcType=DATE},
+      </if>
+      <if test="appotime != null" >
+        #{appotime,jdbcType=VARCHAR},
+      </if>
+      <if test="appcreatetime != null" >
+        #{appcreatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zxl.entity.AppointmentsExample" resultType="java.lang.Integer" >
+    select count(*) from appointments
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update appointments
+    <set >
+      <if test="record.appid != null" >
+        appId = #{record.appid,jdbcType=INTEGER},
+      </if>
+      <if test="record.appmaster != null" >
+        appMaster = #{record.appmaster,jdbcType=CHAR},
+      </if>
+      <if test="record.appidcard != null" >
+        appIdCard = #{record.appidcard,jdbcType=CHAR},
+      </if>
+      <if test="record.appphone != null" >
+        appPhone = #{record.appphone,jdbcType=CHAR},
+      </if>
+      <if test="record.docid != null" >
+        docId = #{record.docid,jdbcType=INTEGER},
+      </if>
+      <if test="record.deptid != null" >
+        deptId = #{record.deptid,jdbcType=INTEGER},
+      </if>
+      <if test="record.appodate != null" >
+        appoDate = #{record.appodate,jdbcType=DATE},
+      </if>
+      <if test="record.appotime != null" >
+        appoTime = #{record.appotime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.appcreatetime != null" >
+        appCreateTime = #{record.appcreatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update appointments
+    set appId = #{record.appid,jdbcType=INTEGER},
+      appMaster = #{record.appmaster,jdbcType=CHAR},
+      appIdCard = #{record.appidcard,jdbcType=CHAR},
+      appPhone = #{record.appphone,jdbcType=CHAR},
+      docId = #{record.docid,jdbcType=INTEGER},
+      deptId = #{record.deptid,jdbcType=INTEGER},
+      appoDate = #{record.appodate,jdbcType=DATE},
+      appoTime = #{record.appotime,jdbcType=VARCHAR},
+      appCreateTime = #{record.appcreatetime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zxl.entity.Appointments" >
+    update appointments
+    <set >
+      <if test="appmaster != null" >
+        appMaster = #{appmaster,jdbcType=CHAR},
+      </if>
+      <if test="appidcard != null" >
+        appIdCard = #{appidcard,jdbcType=CHAR},
+      </if>
+      <if test="appphone != null" >
+        appPhone = #{appphone,jdbcType=CHAR},
+      </if>
+      <if test="docid != null" >
+        docId = #{docid,jdbcType=INTEGER},
+      </if>
+      <if test="deptid != null" >
+        deptId = #{deptid,jdbcType=INTEGER},
+      </if>
+      <if test="appodate != null" >
+        appoDate = #{appodate,jdbcType=DATE},
+      </if>
+      <if test="appotime != null" >
+        appoTime = #{appotime,jdbcType=VARCHAR},
+      </if>
+      <if test="appcreatetime != null" >
+        appCreateTime = #{appcreatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where appId = #{appid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zxl.entity.Appointments" >
+    update appointments
+    set appMaster = #{appmaster,jdbcType=CHAR},
+      appIdCard = #{appidcard,jdbcType=CHAR},
+      appPhone = #{appphone,jdbcType=CHAR},
+      docId = #{docid,jdbcType=INTEGER},
+      deptId = #{deptid,jdbcType=INTEGER},
+      appoDate = #{appodate,jdbcType=DATE},
+      appoTime = #{appotime,jdbcType=VARCHAR},
+      appCreateTime = #{appcreatetime,jdbcType=TIMESTAMP}
+    where appId = #{appid,jdbcType=INTEGER}
+  </update>
+  <select resultMap="BaseResultMap" parameterType="com.zxl.entity.AppointmentsExample" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from appointments
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

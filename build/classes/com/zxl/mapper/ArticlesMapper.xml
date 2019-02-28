@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zxl.dao.ArticlesMapper" >
+  <resultMap id="BaseResultMap" type="com.zxl.entity.Articles" >
+    <id column="artId" property="artid" jdbcType="INTEGER" />
+    <result column="artAuth" property="artauth" jdbcType="VARCHAR" />
+    <result column="artCreateTime" property="artcreatetime" jdbcType="TIMESTAMP" />
+    <result column="artPic" property="artpic" jdbcType="VARCHAR" />
+    <result column="artClassify" property="artclassify" jdbcType="CHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.zxl.entity.Articles" extends="BaseResultMap" >
+    <result column="artDesc" property="artdesc" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    artId, artAuth, artCreateTime, artPic, artClassify
+  </sql>
+  <sql id="Blob_Column_List" >
+    artDesc
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.zxl.entity.ArticlesExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from articles
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zxl.entity.ArticlesExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from articles
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from articles
+    where artId = #{artid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from articles
+    where artId = #{artid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zxl.entity.ArticlesExample" >
+    delete from articles
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zxl.entity.Articles" >
+    insert into articles (artId, artAuth, artCreateTime, 
+      artPic, artClassify, artDesc
+      )
+    values (#{artid,jdbcType=INTEGER}, #{artauth,jdbcType=VARCHAR}, #{artcreatetime,jdbcType=TIMESTAMP}, 
+      #{artpic,jdbcType=VARCHAR}, #{artclassify,jdbcType=CHAR}, #{artdesc,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zxl.entity.Articles" >
+    insert into articles
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="artid != null" >
+        artId,
+      </if>
+      <if test="artauth != null" >
+        artAuth,
+      </if>
+      <if test="artcreatetime != null" >
+        artCreateTime,
+      </if>
+      <if test="artpic != null" >
+        artPic,
+      </if>
+      <if test="artclassify != null" >
+        artClassify,
+      </if>
+      <if test="artdesc != null" >
+        artDesc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="artid != null" >
+        #{artid,jdbcType=INTEGER},
+      </if>
+      <if test="artauth != null" >
+        #{artauth,jdbcType=VARCHAR},
+      </if>
+      <if test="artcreatetime != null" >
+        #{artcreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="artpic != null" >
+        #{artpic,jdbcType=VARCHAR},
+      </if>
+      <if test="artclassify != null" >
+        #{artclassify,jdbcType=CHAR},
+      </if>
+      <if test="artdesc != null" >
+        #{artdesc,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zxl.entity.ArticlesExample" resultType="java.lang.Integer" >
+    select count(*) from articles
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update articles
+    <set >
+      <if test="record.artid != null" >
+        artId = #{record.artid,jdbcType=INTEGER},
+      </if>
+      <if test="record.artauth != null" >
+        artAuth = #{record.artauth,jdbcType=VARCHAR},
+      </if>
+      <if test="record.artcreatetime != null" >
+        artCreateTime = #{record.artcreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.artpic != null" >
+        artPic = #{record.artpic,jdbcType=VARCHAR},
+      </if>
+      <if test="record.artclassify != null" >
+        artClassify = #{record.artclassify,jdbcType=CHAR},
+      </if>
+      <if test="record.artdesc != null" >
+        artDesc = #{record.artdesc,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update articles
+    set artId = #{record.artid,jdbcType=INTEGER},
+      artAuth = #{record.artauth,jdbcType=VARCHAR},
+      artCreateTime = #{record.artcreatetime,jdbcType=TIMESTAMP},
+      artPic = #{record.artpic,jdbcType=VARCHAR},
+      artClassify = #{record.artclassify,jdbcType=CHAR},
+      artDesc = #{record.artdesc,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update articles
+    set artId = #{record.artid,jdbcType=INTEGER},
+      artAuth = #{record.artauth,jdbcType=VARCHAR},
+      artCreateTime = #{record.artcreatetime,jdbcType=TIMESTAMP},
+      artPic = #{record.artpic,jdbcType=VARCHAR},
+      artClassify = #{record.artclassify,jdbcType=CHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zxl.entity.Articles" >
+    update articles
+    <set >
+      <if test="artauth != null" >
+        artAuth = #{artauth,jdbcType=VARCHAR},
+      </if>
+      <if test="artcreatetime != null" >
+        artCreateTime = #{artcreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="artpic != null" >
+        artPic = #{artpic,jdbcType=VARCHAR},
+      </if>
+      <if test="artclassify != null" >
+        artClassify = #{artclassify,jdbcType=CHAR},
+      </if>
+      <if test="artdesc != null" >
+        artDesc = #{artdesc,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where artId = #{artid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.zxl.entity.Articles" >
+    update articles
+    set artAuth = #{artauth,jdbcType=VARCHAR},
+      artCreateTime = #{artcreatetime,jdbcType=TIMESTAMP},
+      artPic = #{artpic,jdbcType=VARCHAR},
+      artClassify = #{artclassify,jdbcType=CHAR},
+      artDesc = #{artdesc,jdbcType=LONGVARCHAR}
+    where artId = #{artid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zxl.entity.Articles" >
+    update articles
+    set artAuth = #{artauth,jdbcType=VARCHAR},
+      artCreateTime = #{artcreatetime,jdbcType=TIMESTAMP},
+      artPic = #{artpic,jdbcType=VARCHAR},
+      artClassify = #{artclassify,jdbcType=CHAR}
+    where artId = #{artid,jdbcType=INTEGER}
+  </update>
+  <select resultMap="ResultMapWithBLOBs" parameterType="com.zxl.entity.ArticlesExample" id="selectByExampleWithBLOBsWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from articles
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select resultMap="BaseResultMap" parameterType="com.zxl.entity.ArticlesExample" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from articles
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

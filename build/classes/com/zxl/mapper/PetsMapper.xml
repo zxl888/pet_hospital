@@ -1,0 +1,441 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zxl.dao.PetsMapper" >
+  <resultMap id="BaseResultMap" type="com.zxl.entity.Pets" >
+    <id column="pId" property="pid" jdbcType="INTEGER" />
+    <result column="pName" property="pname" jdbcType="CHAR" />
+    <result column="pOwner" property="powner" jdbcType="CHAR" />
+    <result column="pOIdCard" property="poidcard" jdbcType="CHAR" />
+    <result column="pSex" property="psex" jdbcType="CHAR" />
+    <result column="pAge" property="page" jdbcType="DOUBLE" />
+    <result column="breId" property="breid" jdbcType="INTEGER" />
+    <result column="weight" property="weight" jdbcType="DOUBLE" />
+    <result column="dietary" property="dietary" jdbcType="VARCHAR" />
+    <result column="sterilizing" property="sterilizing" jdbcType="CHAR" />
+    <result column="pPic" property="ppic" jdbcType="VARCHAR" />
+    <result column="ownerTel" property="ownertel" jdbcType="TINYINT" />
+    <result column="docId" property="docid" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.zxl.entity.Pets" extends="BaseResultMap" >
+    <result column="symptom" property="symptom" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    pId, pName, pOwner, pOIdCard, pSex, pAge, breId, weight, dietary, sterilizing, pPic, 
+    ownerTel, docId
+  </sql>
+  <sql id="Blob_Column_List" >
+    symptom
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.zxl.entity.PetsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from pets
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zxl.entity.PetsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pets
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from pets
+    where pId = #{pid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from pets
+    where pId = #{pid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zxl.entity.PetsExample" >
+    delete from pets
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zxl.entity.Pets" >
+    insert into pets (pId, pName, pOwner, 
+      pOIdCard, pSex, pAge, breId, 
+      weight, dietary, sterilizing, 
+      pPic, ownerTel, docId, 
+      symptom)
+    values (#{pid,jdbcType=INTEGER}, #{pname,jdbcType=CHAR}, #{powner,jdbcType=CHAR}, 
+      #{poidcard,jdbcType=CHAR}, #{psex,jdbcType=CHAR}, #{page,jdbcType=DOUBLE}, #{breid,jdbcType=INTEGER}, 
+      #{weight,jdbcType=DOUBLE}, #{dietary,jdbcType=VARCHAR}, #{sterilizing,jdbcType=CHAR}, 
+      #{ppic,jdbcType=VARCHAR}, #{ownertel,jdbcType=TINYINT}, #{docid,jdbcType=INTEGER}, 
+      #{symptom,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zxl.entity.Pets" >
+    insert into pets
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pid != null" >
+        pId,
+      </if>
+      <if test="pname != null" >
+        pName,
+      </if>
+      <if test="powner != null" >
+        pOwner,
+      </if>
+      <if test="poidcard != null" >
+        pOIdCard,
+      </if>
+      <if test="psex != null" >
+        pSex,
+      </if>
+      <if test="page != null" >
+        pAge,
+      </if>
+      <if test="breid != null" >
+        breId,
+      </if>
+      <if test="weight != null" >
+        weight,
+      </if>
+      <if test="dietary != null" >
+        dietary,
+      </if>
+      <if test="sterilizing != null" >
+        sterilizing,
+      </if>
+      <if test="ppic != null" >
+        pPic,
+      </if>
+      <if test="ownertel != null" >
+        ownerTel,
+      </if>
+      <if test="docid != null" >
+        docId,
+      </if>
+      <if test="symptom != null" >
+        symptom,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pid != null" >
+        #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="pname != null" >
+        #{pname,jdbcType=CHAR},
+      </if>
+      <if test="powner != null" >
+        #{powner,jdbcType=CHAR},
+      </if>
+      <if test="poidcard != null" >
+        #{poidcard,jdbcType=CHAR},
+      </if>
+      <if test="psex != null" >
+        #{psex,jdbcType=CHAR},
+      </if>
+      <if test="page != null" >
+        #{page,jdbcType=DOUBLE},
+      </if>
+      <if test="breid != null" >
+        #{breid,jdbcType=INTEGER},
+      </if>
+      <if test="weight != null" >
+        #{weight,jdbcType=DOUBLE},
+      </if>
+      <if test="dietary != null" >
+        #{dietary,jdbcType=VARCHAR},
+      </if>
+      <if test="sterilizing != null" >
+        #{sterilizing,jdbcType=CHAR},
+      </if>
+      <if test="ppic != null" >
+        #{ppic,jdbcType=VARCHAR},
+      </if>
+      <if test="ownertel != null" >
+        #{ownertel,jdbcType=TINYINT},
+      </if>
+      <if test="docid != null" >
+        #{docid,jdbcType=INTEGER},
+      </if>
+      <if test="symptom != null" >
+        #{symptom,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zxl.entity.PetsExample" resultType="java.lang.Integer" >
+    select count(*) from pets
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update pets
+    <set >
+      <if test="record.pid != null" >
+        pId = #{record.pid,jdbcType=INTEGER},
+      </if>
+      <if test="record.pname != null" >
+        pName = #{record.pname,jdbcType=CHAR},
+      </if>
+      <if test="record.powner != null" >
+        pOwner = #{record.powner,jdbcType=CHAR},
+      </if>
+      <if test="record.poidcard != null" >
+        pOIdCard = #{record.poidcard,jdbcType=CHAR},
+      </if>
+      <if test="record.psex != null" >
+        pSex = #{record.psex,jdbcType=CHAR},
+      </if>
+      <if test="record.page != null" >
+        pAge = #{record.page,jdbcType=DOUBLE},
+      </if>
+      <if test="record.breid != null" >
+        breId = #{record.breid,jdbcType=INTEGER},
+      </if>
+      <if test="record.weight != null" >
+        weight = #{record.weight,jdbcType=DOUBLE},
+      </if>
+      <if test="record.dietary != null" >
+        dietary = #{record.dietary,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sterilizing != null" >
+        sterilizing = #{record.sterilizing,jdbcType=CHAR},
+      </if>
+      <if test="record.ppic != null" >
+        pPic = #{record.ppic,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ownertel != null" >
+        ownerTel = #{record.ownertel,jdbcType=TINYINT},
+      </if>
+      <if test="record.docid != null" >
+        docId = #{record.docid,jdbcType=INTEGER},
+      </if>
+      <if test="record.symptom != null" >
+        symptom = #{record.symptom,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update pets
+    set pId = #{record.pid,jdbcType=INTEGER},
+      pName = #{record.pname,jdbcType=CHAR},
+      pOwner = #{record.powner,jdbcType=CHAR},
+      pOIdCard = #{record.poidcard,jdbcType=CHAR},
+      pSex = #{record.psex,jdbcType=CHAR},
+      pAge = #{record.page,jdbcType=DOUBLE},
+      breId = #{record.breid,jdbcType=INTEGER},
+      weight = #{record.weight,jdbcType=DOUBLE},
+      dietary = #{record.dietary,jdbcType=VARCHAR},
+      sterilizing = #{record.sterilizing,jdbcType=CHAR},
+      pPic = #{record.ppic,jdbcType=VARCHAR},
+      ownerTel = #{record.ownertel,jdbcType=TINYINT},
+      docId = #{record.docid,jdbcType=INTEGER},
+      symptom = #{record.symptom,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update pets
+    set pId = #{record.pid,jdbcType=INTEGER},
+      pName = #{record.pname,jdbcType=CHAR},
+      pOwner = #{record.powner,jdbcType=CHAR},
+      pOIdCard = #{record.poidcard,jdbcType=CHAR},
+      pSex = #{record.psex,jdbcType=CHAR},
+      pAge = #{record.page,jdbcType=DOUBLE},
+      breId = #{record.breid,jdbcType=INTEGER},
+      weight = #{record.weight,jdbcType=DOUBLE},
+      dietary = #{record.dietary,jdbcType=VARCHAR},
+      sterilizing = #{record.sterilizing,jdbcType=CHAR},
+      pPic = #{record.ppic,jdbcType=VARCHAR},
+      ownerTel = #{record.ownertel,jdbcType=TINYINT},
+      docId = #{record.docid,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zxl.entity.Pets" >
+    update pets
+    <set >
+      <if test="pname != null" >
+        pName = #{pname,jdbcType=CHAR},
+      </if>
+      <if test="powner != null" >
+        pOwner = #{powner,jdbcType=CHAR},
+      </if>
+      <if test="poidcard != null" >
+        pOIdCard = #{poidcard,jdbcType=CHAR},
+      </if>
+      <if test="psex != null" >
+        pSex = #{psex,jdbcType=CHAR},
+      </if>
+      <if test="page != null" >
+        pAge = #{page,jdbcType=DOUBLE},
+      </if>
+      <if test="breid != null" >
+        breId = #{breid,jdbcType=INTEGER},
+      </if>
+      <if test="weight != null" >
+        weight = #{weight,jdbcType=DOUBLE},
+      </if>
+      <if test="dietary != null" >
+        dietary = #{dietary,jdbcType=VARCHAR},
+      </if>
+      <if test="sterilizing != null" >
+        sterilizing = #{sterilizing,jdbcType=CHAR},
+      </if>
+      <if test="ppic != null" >
+        pPic = #{ppic,jdbcType=VARCHAR},
+      </if>
+      <if test="ownertel != null" >
+        ownerTel = #{ownertel,jdbcType=TINYINT},
+      </if>
+      <if test="docid != null" >
+        docId = #{docid,jdbcType=INTEGER},
+      </if>
+      <if test="symptom != null" >
+        symptom = #{symptom,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where pId = #{pid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.zxl.entity.Pets" >
+    update pets
+    set pName = #{pname,jdbcType=CHAR},
+      pOwner = #{powner,jdbcType=CHAR},
+      pOIdCard = #{poidcard,jdbcType=CHAR},
+      pSex = #{psex,jdbcType=CHAR},
+      pAge = #{page,jdbcType=DOUBLE},
+      breId = #{breid,jdbcType=INTEGER},
+      weight = #{weight,jdbcType=DOUBLE},
+      dietary = #{dietary,jdbcType=VARCHAR},
+      sterilizing = #{sterilizing,jdbcType=CHAR},
+      pPic = #{ppic,jdbcType=VARCHAR},
+      ownerTel = #{ownertel,jdbcType=TINYINT},
+      docId = #{docid,jdbcType=INTEGER},
+      symptom = #{symptom,jdbcType=LONGVARCHAR}
+    where pId = #{pid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zxl.entity.Pets" >
+    update pets
+    set pName = #{pname,jdbcType=CHAR},
+      pOwner = #{powner,jdbcType=CHAR},
+      pOIdCard = #{poidcard,jdbcType=CHAR},
+      pSex = #{psex,jdbcType=CHAR},
+      pAge = #{page,jdbcType=DOUBLE},
+      breId = #{breid,jdbcType=INTEGER},
+      weight = #{weight,jdbcType=DOUBLE},
+      dietary = #{dietary,jdbcType=VARCHAR},
+      sterilizing = #{sterilizing,jdbcType=CHAR},
+      pPic = #{ppic,jdbcType=VARCHAR},
+      ownerTel = #{ownertel,jdbcType=TINYINT},
+      docId = #{docid,jdbcType=INTEGER}
+    where pId = #{pid,jdbcType=INTEGER}
+  </update>
+  <select resultMap="ResultMapWithBLOBs" parameterType="com.zxl.entity.PetsExample" id="selectByExampleWithBLOBsWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from pets
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select resultMap="BaseResultMap" parameterType="com.zxl.entity.PetsExample" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pets
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

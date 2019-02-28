@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zxl.dao.ResoursesMapper" >
+  <resultMap id="BaseResultMap" type="com.zxl.entity.Resourses" >
+    <id column="reId" property="reid" jdbcType="INTEGER" />
+    <result column="reName" property="rename" jdbcType="VARCHAR" />
+    <result column="rePic" property="repic" jdbcType="VARCHAR" />
+    <result column="rePrice" property="reprice" jdbcType="DOUBLE" />
+    <result column="reFunc" property="refunc" jdbcType="VARCHAR" />
+    <result column="reCate" property="recate" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    reId, reName, rePic, rePrice, reFunc, reCate
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zxl.entity.ResoursesExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from resourses
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from resourses
+    where reId = #{reid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from resourses
+    where reId = #{reid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zxl.entity.ResoursesExample" >
+    delete from resourses
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zxl.entity.Resourses" >
+    insert into resourses (reId, reName, rePic, 
+      rePrice, reFunc, reCate
+      )
+    values (#{reid,jdbcType=INTEGER}, #{rename,jdbcType=VARCHAR}, #{repic,jdbcType=VARCHAR}, 
+      #{reprice,jdbcType=DOUBLE}, #{refunc,jdbcType=VARCHAR}, #{recate,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zxl.entity.Resourses" >
+    insert into resourses
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="reid != null" >
+        reId,
+      </if>
+      <if test="rename != null" >
+        reName,
+      </if>
+      <if test="repic != null" >
+        rePic,
+      </if>
+      <if test="reprice != null" >
+        rePrice,
+      </if>
+      <if test="refunc != null" >
+        reFunc,
+      </if>
+      <if test="recate != null" >
+        reCate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="reid != null" >
+        #{reid,jdbcType=INTEGER},
+      </if>
+      <if test="rename != null" >
+        #{rename,jdbcType=VARCHAR},
+      </if>
+      <if test="repic != null" >
+        #{repic,jdbcType=VARCHAR},
+      </if>
+      <if test="reprice != null" >
+        #{reprice,jdbcType=DOUBLE},
+      </if>
+      <if test="refunc != null" >
+        #{refunc,jdbcType=VARCHAR},
+      </if>
+      <if test="recate != null" >
+        #{recate,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zxl.entity.ResoursesExample" resultType="java.lang.Integer" >
+    select count(*) from resourses
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update resourses
+    <set >
+      <if test="record.reid != null" >
+        reId = #{record.reid,jdbcType=INTEGER},
+      </if>
+      <if test="record.rename != null" >
+        reName = #{record.rename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.repic != null" >
+        rePic = #{record.repic,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reprice != null" >
+        rePrice = #{record.reprice,jdbcType=DOUBLE},
+      </if>
+      <if test="record.refunc != null" >
+        reFunc = #{record.refunc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recate != null" >
+        reCate = #{record.recate,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update resourses
+    set reId = #{record.reid,jdbcType=INTEGER},
+      reName = #{record.rename,jdbcType=VARCHAR},
+      rePic = #{record.repic,jdbcType=VARCHAR},
+      rePrice = #{record.reprice,jdbcType=DOUBLE},
+      reFunc = #{record.refunc,jdbcType=VARCHAR},
+      reCate = #{record.recate,jdbcType=CHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zxl.entity.Resourses" >
+    update resourses
+    <set >
+      <if test="rename != null" >
+        reName = #{rename,jdbcType=VARCHAR},
+      </if>
+      <if test="repic != null" >
+        rePic = #{repic,jdbcType=VARCHAR},
+      </if>
+      <if test="reprice != null" >
+        rePrice = #{reprice,jdbcType=DOUBLE},
+      </if>
+      <if test="refunc != null" >
+        reFunc = #{refunc,jdbcType=VARCHAR},
+      </if>
+      <if test="recate != null" >
+        reCate = #{recate,jdbcType=CHAR},
+      </if>
+    </set>
+    where reId = #{reid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zxl.entity.Resourses" >
+    update resourses
+    set reName = #{rename,jdbcType=VARCHAR},
+      rePic = #{repic,jdbcType=VARCHAR},
+      rePrice = #{reprice,jdbcType=DOUBLE},
+      reFunc = #{refunc,jdbcType=VARCHAR},
+      reCate = #{recate,jdbcType=CHAR}
+    where reId = #{reid,jdbcType=INTEGER}
+  </update>
+  <select resultMap="BaseResultMap" parameterType="com.zxl.entity.ResoursesExample" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from resourses
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

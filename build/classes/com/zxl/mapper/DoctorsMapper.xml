@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zxl.dao.DoctorsMapper" >
+  <resultMap id="BaseResultMap" type="com.zxl.entity.Doctors" >
+    <id column="docId" property="docid" jdbcType="INTEGER" />
+    <result column="docTel" property="doctel" jdbcType="VARCHAR" />
+    <result column="docName" property="docname" jdbcType="CHAR" />
+    <result column="docSex" property="docsex" jdbcType="CHAR" />
+    <result column="docAge" property="docage" jdbcType="TINYINT" />
+    <result column="docTitle" property="doctitle" jdbcType="VARCHAR" />
+    <result column="deptId" property="deptid" jdbcType="INTEGER" />
+    <result column="docFixed" property="docfixed" jdbcType="CHAR" />
+    <result column="docSpec" property="docspec" jdbcType="VARCHAR" />
+    <result column="docPic" property="docpic" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    docId, docTel, docName, docSex, docAge, docTitle, deptId, docFixed, docSpec, docPic
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zxl.entity.DoctorsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from doctors
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from doctors
+    where docId = #{docid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from doctors
+    where docId = #{docid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zxl.entity.DoctorsExample" >
+    delete from doctors
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zxl.entity.Doctors" >
+    insert into doctors (docId, docTel, docName, 
+      docSex, docAge, docTitle, 
+      deptId, docFixed, docSpec, 
+      docPic)
+    values (#{docid,jdbcType=INTEGER}, #{doctel,jdbcType=VARCHAR}, #{docname,jdbcType=CHAR}, 
+      #{docsex,jdbcType=CHAR}, #{docage,jdbcType=TINYINT}, #{doctitle,jdbcType=VARCHAR}, 
+      #{deptid,jdbcType=INTEGER}, #{docfixed,jdbcType=CHAR}, #{docspec,jdbcType=VARCHAR}, 
+      #{docpic,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zxl.entity.Doctors" >
+    insert into doctors
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="docid != null" >
+        docId,
+      </if>
+      <if test="doctel != null" >
+        docTel,
+      </if>
+      <if test="docname != null" >
+        docName,
+      </if>
+      <if test="docsex != null" >
+        docSex,
+      </if>
+      <if test="docage != null" >
+        docAge,
+      </if>
+      <if test="doctitle != null" >
+        docTitle,
+      </if>
+      <if test="deptid != null" >
+        deptId,
+      </if>
+      <if test="docfixed != null" >
+        docFixed,
+      </if>
+      <if test="docspec != null" >
+        docSpec,
+      </if>
+      <if test="docpic != null" >
+        docPic,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="docid != null" >
+        #{docid,jdbcType=INTEGER},
+      </if>
+      <if test="doctel != null" >
+        #{doctel,jdbcType=VARCHAR},
+      </if>
+      <if test="docname != null" >
+        #{docname,jdbcType=CHAR},
+      </if>
+      <if test="docsex != null" >
+        #{docsex,jdbcType=CHAR},
+      </if>
+      <if test="docage != null" >
+        #{docage,jdbcType=TINYINT},
+      </if>
+      <if test="doctitle != null" >
+        #{doctitle,jdbcType=VARCHAR},
+      </if>
+      <if test="deptid != null" >
+        #{deptid,jdbcType=INTEGER},
+      </if>
+      <if test="docfixed != null" >
+        #{docfixed,jdbcType=CHAR},
+      </if>
+      <if test="docspec != null" >
+        #{docspec,jdbcType=VARCHAR},
+      </if>
+      <if test="docpic != null" >
+        #{docpic,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zxl.entity.DoctorsExample" resultType="java.lang.Integer" >
+    select count(*) from doctors
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update doctors
+    <set >
+      <if test="record.docid != null" >
+        docId = #{record.docid,jdbcType=INTEGER},
+      </if>
+      <if test="record.doctel != null" >
+        docTel = #{record.doctel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.docname != null" >
+        docName = #{record.docname,jdbcType=CHAR},
+      </if>
+      <if test="record.docsex != null" >
+        docSex = #{record.docsex,jdbcType=CHAR},
+      </if>
+      <if test="record.docage != null" >
+        docAge = #{record.docage,jdbcType=TINYINT},
+      </if>
+      <if test="record.doctitle != null" >
+        docTitle = #{record.doctitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deptid != null" >
+        deptId = #{record.deptid,jdbcType=INTEGER},
+      </if>
+      <if test="record.docfixed != null" >
+        docFixed = #{record.docfixed,jdbcType=CHAR},
+      </if>
+      <if test="record.docspec != null" >
+        docSpec = #{record.docspec,jdbcType=VARCHAR},
+      </if>
+      <if test="record.docpic != null" >
+        docPic = #{record.docpic,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update doctors
+    set docId = #{record.docid,jdbcType=INTEGER},
+      docTel = #{record.doctel,jdbcType=VARCHAR},
+      docName = #{record.docname,jdbcType=CHAR},
+      docSex = #{record.docsex,jdbcType=CHAR},
+      docAge = #{record.docage,jdbcType=TINYINT},
+      docTitle = #{record.doctitle,jdbcType=VARCHAR},
+      deptId = #{record.deptid,jdbcType=INTEGER},
+      docFixed = #{record.docfixed,jdbcType=CHAR},
+      docSpec = #{record.docspec,jdbcType=VARCHAR},
+      docPic = #{record.docpic,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zxl.entity.Doctors" >
+    update doctors
+    <set >
+      <if test="doctel != null" >
+        docTel = #{doctel,jdbcType=VARCHAR},
+      </if>
+      <if test="docname != null" >
+        docName = #{docname,jdbcType=CHAR},
+      </if>
+      <if test="docsex != null" >
+        docSex = #{docsex,jdbcType=CHAR},
+      </if>
+      <if test="docage != null" >
+        docAge = #{docage,jdbcType=TINYINT},
+      </if>
+      <if test="doctitle != null" >
+        docTitle = #{doctitle,jdbcType=VARCHAR},
+      </if>
+      <if test="deptid != null" >
+        deptId = #{deptid,jdbcType=INTEGER},
+      </if>
+      <if test="docfixed != null" >
+        docFixed = #{docfixed,jdbcType=CHAR},
+      </if>
+      <if test="docspec != null" >
+        docSpec = #{docspec,jdbcType=VARCHAR},
+      </if>
+      <if test="docpic != null" >
+        docPic = #{docpic,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where docId = #{docid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zxl.entity.Doctors" >
+    update doctors
+    set docTel = #{doctel,jdbcType=VARCHAR},
+      docName = #{docname,jdbcType=CHAR},
+      docSex = #{docsex,jdbcType=CHAR},
+      docAge = #{docage,jdbcType=TINYINT},
+      docTitle = #{doctitle,jdbcType=VARCHAR},
+      deptId = #{deptid,jdbcType=INTEGER},
+      docFixed = #{docfixed,jdbcType=CHAR},
+      docSpec = #{docspec,jdbcType=VARCHAR},
+      docPic = #{docpic,jdbcType=VARCHAR}
+    where docId = #{docid,jdbcType=INTEGER}
+  </update>
+  <select resultMap="BaseResultMap" parameterType="com.zxl.entity.DoctorsExample" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from doctors
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>
